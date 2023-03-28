@@ -27,6 +27,14 @@ import sys
 # print(platform)
 # exit()
 
-print('Este módulo se chama', __name__)
+# print('Este módulo se chama', __name__)
 
-print(*sys.path, sep='\n')
+# print(*sys.path, sep='\n')
+
+
+def dobra(x):
+    return x * 2
+
+
+dobra = dobra(3)
+print(dobra)
