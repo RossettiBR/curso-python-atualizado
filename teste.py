@@ -1,3 +1,4 @@
+import sys
 # from sys import platform
 # from sys import exit
 
@@ -27,3 +28,5 @@
 # exit()
 
 print('Este módulo se chama', __name__)
+
+print(*sys.path, sep='\n')
