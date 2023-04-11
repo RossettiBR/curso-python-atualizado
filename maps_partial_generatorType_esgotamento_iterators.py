@@ -1,5 +1,5 @@
 from functools import partial
-from types import GeneratorType
+# from types import GeneratorType
 
 
 # map - para mapear dados
@@ -49,3 +49,10 @@ novos_produtos = list(map(
 print(produtos)
 print(novos_produtos)
 
+
+print(
+    list(map(
+        lambda x: x * 3,
+        [1, 2, 3, 4]
+    ))
+)
