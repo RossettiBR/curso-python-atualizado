@@ -1,6 +1,7 @@
 {
     "window.zoomLevel": 1,
     "editor.fontSize": 18,
+    "editor.rulers": [80],
     "code-runner.executorMap": {
       "python": "clear ; python -u",
     },
