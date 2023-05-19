@@ -1,6 +1,3 @@
-from typing import Any
-
-
 def meu_repr(self):
     return f'{type(self).__name}{(self.__dict__)}'
 
@@ -16,7 +13,7 @@ class Meta(type):
 
         return cls
 
-    def __call__(self, *args, **kwargs) -> Any:
+    def __call__(self, *args, **kwargs):
         instancia = super().__call__(*args, **kwargs)
 
         if 'nome' not in instancia.__dict__:
