@@ -1,3 +1,3 @@
-import varias_linhas
+import docstrings_funcao
 
-help(varias_linhas)
+help(docstrings_funcao)
