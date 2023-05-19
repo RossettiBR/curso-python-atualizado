@@ -1,0 +1,3 @@
+import doctrings_uma_linha
+
+help(doctrings_uma_linha)
