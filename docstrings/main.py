@@ -1,3 +1,3 @@
-import doctrings_uma_linha
+import varias_linhas
 
-help(doctrings_uma_linha)
+help(varias_linhas)
