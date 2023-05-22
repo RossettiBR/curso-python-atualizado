@@ -2,19 +2,20 @@ from abc import ABC, abstractmethod
 
 
 class Conta(ABC):
-    def __init__(self, agencia, conta, saldo=0):
+    def __init__(self, agencia: int, conta: int, saldo: float = 0) -> None:
         self.agencia = agencia
         self.conta = conta
         self.saldo = saldo
 
     @abstractmethod
-    def sacar(self, valor): ...
+    def sacar(self, valor: float) -> float: ...
 
-    def depositar(self, valor):
+    def depositar(self, valor: float) -> float:
         self.saldo += valor
         self.detalhe(f'(DEPÓSITO {valor})')
+        return self.saldo
 
-    def detalhe(self, msg=''):
+    def detalhe(self, msg: str = '') -> None:
         print(f'O seu saldo é {self.saldo:.2f} {msg}')
         print('---')
 
@@ -33,11 +34,14 @@ class ContaPoupanca(Conta):
 
 
 class ContaCorrente(Conta):
-    def __init__(self, agencia, conta, saldo=0, limite=0):
+    def __init__(
+            self, agencia: int, conta: int,
+            saldo: float = 0, limite: float = 0
+    ):
         super().__init__(agencia, conta, saldo)
         self.limite = limite
 
-    def sacar(self, valor):
+    def sacar(self, valor: float) -> float:
         valor_pos_saque = self.saldo - valor
         limite_maximo = -self.limite
 
@@ -49,6 +53,7 @@ class ContaCorrente(Conta):
         print('Não foi possivel sacar o valor desejado')
         print(f'Seu limite é {-self.limite:.2f}')
         self.detalhe(f'(SAQUE NEGADO {valor})')
+        return self.saldo
 
 
 if __name__ == '__main__':
