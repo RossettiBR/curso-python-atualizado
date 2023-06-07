@@ -1,6 +1,10 @@
+# type: ignore
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
 ROOT_FOLDER = Path(__file__).parent
@@ -12,7 +16,7 @@ def make_chrome_browser(*options: str) -> webdriver.Chrome:
 
     if options is not None:
         for option in options:
-            chrome_options.add_argument(option)  # type: ignore
+            chrome_options.add_argument(option)
 
     chrome_service = Service(
         executable_path=str(CHROMEDRIVER_EXEC)
@@ -25,7 +29,17 @@ def make_chrome_browser(*options: str) -> webdriver.Chrome:
 
     return browser
 
+
 if __name__ == '__main__':
+    TIME_TO_WAIT = 10
     options = ()
     browser = make_chrome_browser(*options)
     browser.get('https://www.google.com.br')
+
+    search_box_text = WebDriverWait(browser, TIME_TO_WAIT).until(
+        EC.presence_of_element_located(
+            (By.NAME, 'q')
+        )
+    )
+    search_box_text.send_keys('Hello World!')
+    sleep(TIME_TO_WAIT)
