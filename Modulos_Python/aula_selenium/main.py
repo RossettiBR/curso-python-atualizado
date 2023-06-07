@@ -58,7 +58,6 @@ if __name__ == '__main__':
     # avançar = browser.find_element(By.CLASS_NAME, 'button')
     # avançar.click()
 
-
     # results = browser.find_element(By.ID, 'search')
     # links = results.find_elements(By.TAG_NAME, 'a')
     # links[0].click()
