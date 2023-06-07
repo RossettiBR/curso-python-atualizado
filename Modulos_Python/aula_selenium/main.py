@@ -35,17 +35,31 @@ if __name__ == '__main__':
     TIME_TO_WAIT = 10
     options = ()
     browser = make_chrome_browser(*options)
-    browser.get('https://www.google.com.br')
+    browser.get('')
 
-    search_box_text = WebDriverWait(browser, TIME_TO_WAIT).until(
-        EC.presence_of_element_located(
-            (By.NAME, 'q')
-        )
-    )
-    search_box_text.send_keys('Hello World!')
-    search_box_text.send_keys(Keys.ENTER)
+    # search_box_text = WebDriverWait(browser, TIME_TO_WAIT).until(
+    #     EC.presence_of_element_located(
+    #         (By.NAME, 'cpf'),
+    #     )
+    # )
+    # search_box_text.send_keys('')
+    # search_box_text.send_keys(Keys.ENTER)
 
-    results = browser.find_element(By.ID, 'search')
-    links = results.find_elements(By.TAG_NAME, 'a')
-    links[0].click()
+    var = browser.find_element
+
+    cpf = var(By.NAME, 'cpf')
+    cpf.send_keys('123')
+    data_nascimento = browser.find_element(By.NAME, 'datanasc')
+    data_nascimento.send_keys('123')
+    cnpj = browser.find_element(By.NAME, 'cnpj')
+    cnpj.send_keys('123')
+    nire = browser.find_element(By.NAME, 'nire')
+    nire.send_keys('123')
+    # avançar = browser.find_element(By.CLASS_NAME, 'button')
+    # avançar.click()
+
+
+    # results = browser.find_element(By.ID, 'search')
+    # links = results.find_elements(By.TAG_NAME, 'a')
+    # links[0].click()
     sleep(TIME_TO_WAIT)
