@@ -60,18 +60,6 @@ if __name__ == '__main__':
     window.show()
     app.exec()
 
-
-
-
-
-
-
-
-
-
-
-
-
 # central_widget.show()
 window.show()
 app.exec()
