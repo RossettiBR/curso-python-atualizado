@@ -5,6 +5,7 @@ from main_window import MainWindow
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QLabel
 from variables import WINDOW_ICONS
+from info import Info
 
 if __name__ == '__main__':
     app = QApplication()
@@ -15,8 +16,11 @@ if __name__ == '__main__':
     icon = QIcon(str(WINDOW_ICONS))
     window.setWindowIcon(icon)
 
-    # Display
+    # Info
+    info = Info('2.0 ^ 10.0 = 1024')
+    window.addToVLayout(info)
 
+    # Display
     display = Display()
     window.addToVLayout(display)
 
