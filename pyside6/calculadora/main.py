@@ -31,7 +31,7 @@ if __name__ == '__main__':
     window.vLayout.addLayout(buttonsGrid)
 
     # executa tudo
-    window.adjustFixedSize()
+    # window.adjustFixedSize()
     window.show()
 
     app.exec()
