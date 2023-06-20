@@ -3,13 +3,14 @@ import sys
 from display import Display
 from main_window import MainWindow
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QApplication, QLabel
+from PySide6.QtWidgets import QApplication
 from variables import WINDOW_ICONS
 from info import Info
+from style import setupTheme
 
 if __name__ == '__main__':
-    app = QApplication()
-
+    app = QApplication(sys.argv)
+    setupTheme()
     window = MainWindow()
 
     # define um icone
