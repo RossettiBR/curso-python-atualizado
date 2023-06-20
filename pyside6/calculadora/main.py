@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QApplication
 from variables import WINDOW_ICONS
 from info import Info
 from style import setupTheme
+from buttons import Button
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
@@ -24,6 +25,10 @@ if __name__ == '__main__':
     # Display
     display = Display()
     window.addToVLayout(display)
+
+    # Button
+    button = Button('Texto do botão')
+    window.addToVLayout(button)
 
     # executa tudo
     window.adjustFixedSize()
