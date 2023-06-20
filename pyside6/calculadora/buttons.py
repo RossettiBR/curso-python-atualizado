@@ -17,10 +17,16 @@ class ButtonsGrid(QGridLayout):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-        self._grid_mask = [
+        self._gridMask = [
             ['C', '◀', '^', '/'],
             ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
             ['',  '0', '.', '='],
         ]
+
+        self._makeGrid()
+
+    def _makeGrid(self):
+        for row in self._gridMask:
+            print(row)
