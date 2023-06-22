@@ -19,7 +19,7 @@ if __name__ == '__main__':
     window.setWindowIcon(icon)
 
     # Info
-    info = Info('2.0 ^ 10.0 = 1024')
+    info = Info('Sua conta')
     window.addWidgetToVLayout(info)
 
     # Display
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     window.vLayout.addLayout(buttonsGrid)
 
     # executa tudo
-    # window.adjustFixedSize()
+    window.adjustFixedSize()
     window.show()
 
     app.exec()
