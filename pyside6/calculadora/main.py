@@ -17,6 +17,7 @@ if __name__ == '__main__':
     # define um icone
     icon = QIcon(str(WINDOW_ICONS))
     window.setWindowIcon(icon)
+    app.setWindowIcon(icon)
 
     # Info
     info = Info('Sua conta')
