@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+import math
 
 from PySide6.QtWidgets import QPushButton, QGridLayout
 from PySide6.QtCore import Slot
@@ -38,24 +39,31 @@ class ButtonsGrid(QGridLayout):
         self.display = display
         self.info = info
         self.window = window
-        self.equation = ''
+        self._equation = ''
         self._equationInitialValue = 'Sua Conta'
         self._right = None
         self._left = None
         self._op = None
 
-        self.equation = self._equationInitialValue
+        self._equation = self._equationInitialValue
         self._makeGrid()
 
-    def vouApagarVocê(self):
-        print('Signal recebido por "vouApagarVocê" em', type(self).__name__)
+    @property
+    def equation(self):
+        return self._equation
+
+    @equation.setter
+    def equation(self, value):
+        self._equation = value
+        self.info.setText(value)
 
     def _makeGrid(self):
-        self.display.eqPressed.connect(self.vouApagarVocê)
+        self.display.eqPressed.connect(self._eq)
         self.display.delPressed.connect(self.display.backspace)
-        self.display.clearPressed.connect(self.vouApagarVocê)
-        self.display.inputPressed.connect(self.vouApagarVocê)
-        
+        self.display.clearPressed.connect(self._clear)
+        self.display.inputPressed.connect(self._insertToDisplay)
+        self.display.operatorPressed.connect(self._configLeftOp)
+
         for rowNumber, rowData in enumerate(self._gridMask):
             for colunmNumber, buttonText in enumerate(rowData):
                 button = Button(buttonText)
@@ -65,23 +73,24 @@ class ButtonsGrid(QGridLayout):
                     self._configSpecialButton(button)
 
                 self.addWidget(button, rowNumber, colunmNumber)
-                slot = self._makeSlot(self._insertButtonTextToDisplay, button)
+                slot = self._makeSlot(self._insertToDisplay, buttonText)
                 self._connectButtonClicked(button, slot)
 
+    @Slot()
     def _makeSlot(self, func, *args, **kwargs):
         @Slot(bool)
         def realSlot(_):
             func(*args, **kwargs)
         return realSlot
 
-    def _insertButtonTextToDisplay(self, button):
-        buttonText = button.text()
-        newDisplayValue = self.display.text() + buttonText
+    @Slot()
+    def _insertToDisplay(self, text):
+        newDisplayValue = self.display.text() + text
 
         if not isValidNumber(newDisplayValue):
             return
 
-        self.display.insert(buttonText)
+        self.display.insert(text)
 
     def _connectButtonClicked(self, button, slot):
         button.clicked.connect(slot)
@@ -98,12 +107,13 @@ class ButtonsGrid(QGridLayout):
         if text in '+-/*':
             self._connectButtonClicked(
                 button,
-                self._makeSlot(self._operatorClicked, button)
+                self._makeSlot(self._configLeftOp, button)
             )
 
         if text == '=':
             self._connectButtonClicked(button, self._eq)
 
+    @Slot()
     def _clear(self):
         self._right = None
         self._left = None
@@ -111,8 +121,8 @@ class ButtonsGrid(QGridLayout):
         self.equation = self._equationInitialValue
         self.display.clear()
 
-    def _operatorClicked(self, button):
-        buttonText = button.text()
+    @Slot()
+    def _configLeftOp(self, text):
         displayText = self.display.text()
         self.display.clear()
 
@@ -123,9 +133,10 @@ class ButtonsGrid(QGridLayout):
         if self._left is None:
             self._left = float(displayText)
 
-        self._op = buttonText
-        self.equation = self.info.setText(f'{self._left} {self._op} ??')
+        self._op = text
+        self.equation = f'{self._left} {self._op} ??'
 
+    @Slot()
     def _eq(self):
         displayText = self.display.text()
 
@@ -135,10 +146,13 @@ class ButtonsGrid(QGridLayout):
 
         self._right = float(displayText)
         self.equation = f'{self._left} {self._op} {self._right}'
-        result = 0.0
+        result = 'error'
 
         try:
-            result = eval(self.equation)
+            if '^' in self.equation and isinstance(self._left, float):
+                result = math.pow(self._left, self._right)
+            else:
+                result = eval(self.equation)
         except ZeroDivisionError:
             self._showError('Divisão por zero.')
         except OverflowError:
