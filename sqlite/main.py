@@ -22,13 +22,31 @@ cursor.execute(
 connection.commit()
 
 # Registrar valores na tabela
-
-cursor.execute(
+sql = (
     f'INSERT INTO {TABLE_NAME} '
-    '(id, name, weight) '
-    'VALUES (NULL, "Helena", 4), (NULL, "Luiz Otavio", 9.9)'
+    '(name, weight) '
+    'VALUES '
+    '(:nome , :peso)'
 )
+
+
+# cursor.execute(sql, ['Joana', 4])
+# cursor.executemany(
+#     sql,
+#     [
+#         ['Mario', 4], ['Luiz', 8]
+#     ]
+# )
+# cursor.execute(sql, {'nome': 'Wander', 'peso': 5})
+cursor.executemany(sql, (
+    {'nome': 'Lucio', 'peso': 3},
+    {'nome': 'Lucia', 'peso': 1},
+    {'nome': 'Roberto', 'peso': 3},
+    {'nome': 'Caio', 'peso': 9},
+    {'nome': 'felipi', 'peso': 5},
+))
 connection.commit()
+print(sql)
 
 # SQL
 
