@@ -28,9 +28,32 @@ with connection:
     connection.commit()
 
     with connection.cursor() as cursor:
-        result = cursor.execute(
+        sql = (
             f'INSERT INTO {TABLE_NAME} '
-            ' (nome, idade) VALUES ("Luiz", 25)'
+            ' (nome, idade) '
+            'VALUES '
+            '(%s, %s) '
         )
+        data = ('Luiz', 18)
+        result = cursor.execute(sql, data)
         print(result)
+        print(sql)
+        print(data)
+    connection.commit()
+
+    with connection.cursor() as cursor:
+        sql = (
+            f'INSERT INTO {TABLE_NAME} '
+            '(nome, idade) '
+            'VALUES '
+            '(%(name)s, %(age)s) '
+        )
+        data2 = {
+            "name": "Le",
+            "age": 25,
+        }
+        result = cursor.execute(sql, data2)
+        print(result)
+        print(sql)
+        print(data2)
     connection.commit()
