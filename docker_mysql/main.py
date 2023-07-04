@@ -36,9 +36,9 @@ with connection:
         )
         data = ('Luiz', 18)
         result = cursor.execute(sql, data)
-        print(result)
-        print(sql)
-        print(data)
+        # print(result)
+        # print(sql)
+        # print(data)
     connection.commit()
 
     with connection.cursor() as cursor:
@@ -52,9 +52,9 @@ with connection:
             {"name": "Le", "age": 25}
         )
         result = cursor.execute(sql, data2)
-        print(result)
-        print(sql)
-        print(data2)
+        # print(result)
+        # print(sql)
+        # print(data2)
     connection.commit()
 
     with connection.cursor() as cursor:
@@ -71,14 +71,28 @@ with connection:
             {"name": "Maria", "age": 85},
         )
         result = cursor.executemany(sql, data3)  # type: ignore
-        print(result)
-        print(sql)
-        print(data3)
+        # print(result)
+        # print(sql)
+        # print(data3)
     connection.commit()
 
     with connection.cursor() as cursor:
         sql = (
             f'SELECT * FROM {TABLE_NAME} '
+            'WHERE id = 2   '
         )
         cursor.execute(sql)
-        print(sql)
+
+        data5 = cursor.fetchall()
+
+        # for row in data5:
+        #     print(row)
+
+    with connection.cursor() as cursor:
+        sql = (
+            f'SELECT * FROM {TABLE_NAME} '
+        )
+
+        cursor.execute(sql)
+        for row in cursor.fetchall():
+            print(row)
