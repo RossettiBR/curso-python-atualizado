@@ -48,12 +48,37 @@ with connection:
             'VALUES '
             '(%(name)s, %(age)s) '
         )
-        data2 = {
-            "name": "Le",
-            "age": 25,
-        }
+        data2 = (
+            {"name": "Le", "age": 25}
+        )
         result = cursor.execute(sql, data2)
         print(result)
         print(sql)
         print(data2)
     connection.commit()
+
+    with connection.cursor() as cursor:
+        sql = (
+            f'INSERT INTO {TABLE_NAME} '
+            '(nome, idade) '
+            'VALUES '
+            '(%(name)s, %(age)s) '
+        )
+        data3 = (
+            {"name": "Sah", "age": 43},
+            {"name": "Julia", "age": 21},
+            {"name": "Rose", "age": 36},
+            {"name": "Maria", "age": 85},
+        )
+        result = cursor.executemany(sql, data3)  # type: ignore
+        print(result)
+        print(sql)
+        print(data3)
+    connection.commit()
+
+    with connection.cursor() as cursor:
+        sql = (
+            f'SELECT * FROM {TABLE_NAME} '
+        )
+        cursor.execute(sql)
+        print(sql)
