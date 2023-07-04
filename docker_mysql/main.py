@@ -1,4 +1,5 @@
 import pymysql
+import pymysql.cursors
 import dotenv
 import os
 
@@ -11,6 +12,7 @@ connection = pymysql.connect(
     user=os.environ['MYSQL_USER'],
     password=os.environ['MYSQL_PASSWORD'],
     database=os.environ['MYSQL_DATABASE'],
+    cursorclass=pymysql.cursors.DictCursor,
 )
 
 
@@ -112,6 +114,10 @@ with connection:
         connection.commit()
 
         cursor.execute(f'SELECT * FROM {TABLE_NAME}')
+
+        # for row in cursor.fetchall():
+        #     _id, name, age = row
+        #     print(_id, name, age)
 
         for row in cursor.fetchall():
             print(row)
